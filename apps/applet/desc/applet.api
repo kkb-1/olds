@@ -1,0 +1,11 @@
+syntax = "v1"
+
+info (
+	title:   "api接口集中点"
+	desc:    "集中生成api接口"
+	author:  "kkb"
+	email:   "2609479523@qq.com"
+	version: "1"
+)
+
+import "user/user.api"

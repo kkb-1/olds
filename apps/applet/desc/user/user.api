@@ -1,0 +1,111 @@
+syntax = "v1"
+
+info(
+	title: "管理员用户模块"
+	desc: "管理员用户模块api接口"
+	author: "kkb"
+	email: "2609479523@qq.com"
+	version: "1"
+)
+
+type (
+	//用户基本信息实例
+	UserInfo {
+		Username string `json:"username"`
+		Nickname string `json:"nickname"`
+		Avatar string `json:"avatar"`
+		Status int64 `json:"status"`
+	}
+
+)
+
+
+type (
+	Token {
+		AccessToken  string `json:"accessToken"`
+		AccessExpire int64  `json:"accessExpire"`  //过期时间戳
+	}
+)
+
+
+type (
+	LoginRequest {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginResponse {
+		Token Token `json:"token"`
+	}
+)
+
+
+type (
+	RegisterRequest {
+		Username       string `json:"username"`
+		Password       string `json:"password"`
+		InvitationCode string `json:"invitationCode"` //邀请码
+	}
+	RegisterResponse {
+		Token Token `json:"token"`
+	}
+)
+
+type (
+	InviteResponse {
+		InvitationCode string `json:"invitationCode"` //邀请码
+		Expire         int    `json:"expire"` //有效时间，以秒为单位
+	}
+)
+
+type (
+	UpdateUserInfoRequest {
+		Nickname string `json:"nickname,optional"`  //昵称
+		Avatar string `json:"avatar,optional"`  //头像地址
+		Password string `json:"password,optional"` //密码
+	}
+
+	UpdateUserInfoResponse {
+		UserId string `json:"userId"` //用户id
+	}
+
+)
+
+type (
+	GetUserInfoResponse {
+	UserInfo UserInfo `json:"userInfo"` //该用户基本信息
+	}
+)
+
+
+@server (
+	prefix: /v1
+)
+service user-api {
+	@doc "管理员用户登录"
+	@handler LoginHandler
+	post /login (LoginRequest) returns (LoginResponse)
+
+	@doc "管理员注册"
+	@handler RegisterHandler
+	post /register (RegisterRequest) returns (RegisterResponse)
+}
+
+
+@server (
+	prefix: /v1/user
+	jwt:    JWT
+)
+service user-api {
+	@doc "获取邀请码"
+	@handler InviteHandler
+	get /invite returns (InviteResponse)
+
+	@doc "修改用户信息"
+	@handler UpdateUserInfo
+	put /userInfo (UpdateUserInfoRequest) returns (UpdateUserInfoResponse)
+
+	@doc "获取用户信息"
+	@handler GetUserInfo
+	get /userInfo  returns (GetUserInfoResponse)
+}
+
