@@ -1,5 +1,7 @@
 CREATE DATABASE olds_user;
 
+USE olds_user;
+
 CREATE TABLE `olds_user` (
     `id` varchar(100) not null comment "唯一标识",
     `username` varchar(100) not null comment "唯一用户名",
@@ -11,6 +13,6 @@ CREATE TABLE `olds_user` (
     `update_time` int comment "修改时间",
     primary key (`id`),
     unique (`username`)
-);
+)COMMENT='管理员用户信息表';
 
 INSERT INTO `olds_user` (`id`, `username`, `password`, `status`) values ('root', 'root', 'e10adc3949ba59abbe56e057f20f883e', 1);
