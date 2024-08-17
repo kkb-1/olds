@@ -1,0 +1,180 @@
+DELETE /test2
+
+
+#建立索引
+PUT /test2
+{
+  "mappings": {
+    "properties": {
+      "open_id": {
+        "type": "keyword"
+      },
+      "uid": {
+        "type": "keyword"
+      },
+      "details": {
+        "properties": {
+          "phone": {
+            "type": "keyword"
+          },
+          "role": {
+            "type": "short"
+          },
+          "height": {
+            "type": "double"
+          },
+          "weight": {
+            "type": "double"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "sex": {
+            "type": "short"
+          },
+          "smoke": {
+            "type": "boolean"
+          },
+          "drink": {
+            "type": "boolean"
+          },
+          "exercise": {
+            "type": "boolean"
+          }
+        }
+      },
+      "kids": {
+        "properties": {
+          "open_id": {
+            "type": "keyword"
+          },
+          "note": {
+            "type": "text"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "kid_num": {
+        "type": "integer"
+      },
+      "parents": {
+        "properties": {
+          "uid": {
+            "type": "keyword"
+          },
+          "note": {
+            "type": "text"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "parent_num": {
+        "type": "integer"
+      }
+    }
+  }
+}
+
+GET /test2
+
+#同步创建用户
+POST /test2/_doc/{open_id}
+{
+  "open_id":"1w",
+  "uid":"1",
+  "details":{
+    "phone":"1233",
+    "role": 1,
+    "height": 21.1,
+    "weight": 21.1,
+    "age":22,
+    "sex":1,
+    "smoke":true,
+    "drink":true,
+    "exercise":true
+  }
+}
+
+GET /test2/_doc/{open_id}
+
+
+#修改用户
+POST /test2/_update/{open_id}
+{
+  "doc":{
+    "open_id":"1"
+  }
+}
+
+
+#同步关联信息
+# 同步增加老人关联信息
+if(ctx._source.parents==null){
+  ctx._source.parents=[params.obj];
+}else{
+  ctx._source.parents.add(params.obj);
+}
+ctx._source.parent_num = ctx._source.parents.length;
+
+POST /test2/_update/{open_id}
+{
+    "script" : {
+        "source": "if(ctx._source.parents==null){ctx._source.parents=[params.obj];}else{ctx._source.parents.add(params.obj);}ctx._source.parent_num = ctx._source.parents.length;",
+        "lang": "painless",
+        "params" : {
+            "obj" : {
+          "uid":"1",
+          "note":"妈妈",
+          "confirm":false
+        }
+        }
+    }
+}
+
+# 删除数据(双删)
+for (def i = 0; i < ctx._source.parents.length; i++) {
+    if (ctx._source.parents[i].uid == params.uid){
+      ctx._source.parents.remove(i);
+      ctx._source.parent_num = ctx._source.parents.length;
+      break
+    }
+}
+
+POST /test2/_update/{open_id}
+{
+    "script" : {
+        "source": "for (def i = 0; i < ctx._source.parents.length; i++) {  if (ctx._source.parents[i].uid == params.uid){ctx._source.parents.remove(i);ctx._source.parent_num = ctx._source.parents.length;break}}",
+        "lang": "painless",
+        "params" : {
+            "uid" : "1"
+        }
+    }
+}
+
+# 修改指定uid的数据
+for (def i = 0; i < ctx._source.parents.length; i++) {
+    if (ctx._source.parents[i].uid == params.uid){
+      for (def j = 0; j < params.fields.length; j++)
+      ctx._source.parents[i][params.fields[j]] = params.values[j];
+      break
+    }
+}
+
+POST /test2/_update/{open_id}
+{
+    "script" : {
+        "source": "for (def i = 0; i < ctx._source.parents.length; i++) {  if (ctx._source.parents[i].uid == params.uid){for (def j = 0; j < params.fields.length; j++)ctx._source.parents[i][params.fields[j]] = params.values[j];break}}",
+        "lang": "painless",
+        "params" : {
+            "uid":"1",
+            "fields" : ["note","confirm"],
+            "values": ["mama",true]
+        }
+    }
+}
+
+GET /test2/_doc/{open_id}
