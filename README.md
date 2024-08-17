@@ -28,6 +28,32 @@
 * 书写docker-compose.yaml提供环境参考、并接入k8s
 * 将zap集成进go-zero
 
+## 项目布局
+
+#### apps
+
+存放api接口以及rpc、model等核心代码。其中applet为api接口集中点，其他均是rpc、model、mq布局
+
+#### common
+
+存放第三方库，该第三方库指的是项目作者将原来的库进行集成或二次修改所得
+
+#### db
+
+存放sql文件
+
+#### public
+
+存放公开的数据，目前存放log文件
+
+#### script
+
+脚本文件，存放常用的命令
+
+#### template
+
+存放go-zero的二次开发后的模版文件
+
 ## 作者后话
 
 接口功能比较简单，主要用作学习。

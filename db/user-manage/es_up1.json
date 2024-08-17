@@ -1,0 +1,83 @@
+//PUT /olds_userManage
+
+{
+  "mappings": {
+    "properties": {
+      "open_id": {
+        "type": "keyword"
+      },
+      "uid": {
+        "type": "keyword"
+      },
+      "phone": {
+        "type": "keyword"
+      },
+      "role": {
+        "type": "short"
+      },
+      "details": {
+        "properties": {
+          "phone": {
+            "type": "keyword"
+          },
+          "role": {
+            "type": "short"
+          },
+          "height": {
+            "type": "double"
+          },
+          "weight": {
+            "type": "double"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "sex": {
+            "type": "short"
+          },
+          "smoke": {
+            "type": "boolean"
+          },
+          "drink": {
+            "type": "boolean"
+          },
+          "exercise": {
+            "type": "boolean"
+          }
+        }
+      },
+      "kids": {
+        "properties": {
+          "open_id": {
+            "type": "keyword"
+          },
+          "note": {
+            "type": "text"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "kid_num": {
+        "type": "integer"
+      },
+      "parents": {
+        "properties": {
+          "uid": {
+            "type": "keyword"
+          },
+          "note": {
+            "type": "text"
+          },
+          "confirm": {
+            "type": "boolean"
+          }
+        }
+      },
+      "parent_num": {
+        "type": "integer"
+      }
+    }
+  }
+}
