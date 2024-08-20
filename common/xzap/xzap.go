@@ -63,7 +63,7 @@ func New(config Config) *zap.Logger {
 		cors = append(cors, consoleInfoCore)
 	}
 
-	logger := makeZapLogger(cors, zap.AddCallerSkip(1), zap.WithCaller(true))
+	logger := makeZapLogger(cors, zap.AddCallerSkip(0), zap.WithCaller(true))
 	defer logger.Sync()
 	return logger
 }

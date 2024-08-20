@@ -1,0 +1,32 @@
+Name: userManageMq
+DetailsKqConsumer:
+  Name: user-manage-details-consumer
+  Brokers:
+    - 127.0.0.1:9094
+  Group: group-um-details
+  Topic: olds-user-manage-details
+  Offset: last
+  Consumers: 1
+  Processors: 1
+BindsKqConsumer:
+  Name: user-manage-binds-consumer
+  Brokers:
+    - 127.0.0.1:9094
+  Group: group-um-binds
+  Topic: olds-user-manage-binds
+  Offset: last
+  Consumers: 1
+  Processors: 1
+ES:
+  Addresses:
+    - http://localhost:9200/
+  Username: elastic
+  Password: Ww260933435
+  MaxRetries: 3
+Zap:
+  Format: console
+  Level: debug
+  Color: true
+  FilePath: ../../../public/logs
+  File: true
+  Terminal: true

@@ -1,2 +1,14 @@
 syntax="proto3";
+//实现功能：
+//1.列出监护人用户列表
+//2.获取指定用户的全部信息(包括他所绑定的老人名单)《家人，你tm多表查询，逼我用es就直说》
+//3.强制解绑or绑定
+package userManage;
+option go_package="./userManage";
 
+message user {
+
+}
+
+message userListRequest {
+}

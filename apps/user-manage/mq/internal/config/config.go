@@ -2,6 +2,7 @@ package config
 
 import (
 	"application/common/xes"
+	"application/common/xzap"
 	"github.com/zeromicro/go-queue/kq"
 	"github.com/zeromicro/go-zero/core/service"
 )
@@ -9,6 +10,8 @@ import (
 type Config struct {
 	service.ServiceConf
 
-	KqConsumerConf kq.KqConf
-	ES             xes.Config
+	DetailsKqConsumer kq.KqConf
+	BindsKqConsumer   kq.KqConf
+	ES                xes.Config
+	Zap               xzap.Config
 }

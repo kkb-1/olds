@@ -82,9 +82,10 @@ PUT /test2
 GET /test2
 
 #同步创建用户
-POST /test2/_doc/{open_id}
+POST /test2/_update/{open_id}
 {
-  "open_id":"1w",
+  "doc":{
+     "open_id":"1w",
   "uid":"1",
   "details":{
     "phone":"1233",
@@ -97,6 +98,8 @@ POST /test2/_doc/{open_id}
     "drink":true,
     "exercise":true
   }
+  },
+  "doc_as_upsert":true
 }
 
 GET /test2/_doc/{open_id}
@@ -106,8 +109,9 @@ GET /test2/_doc/{open_id}
 POST /test2/_update/{open_id}
 {
   "doc":{
-    "open_id":"1"
-  }
+    "open_id":"2"
+  },
+    "doc_as_upsert":true
 }
 
 
@@ -132,7 +136,11 @@ POST /test2/_update/{open_id}
           "confirm":false
         }
         }
-    }
+    },
+         "upsert": {
+           "parents":[],
+           "parent_num": 0
+         }
 }
 
 # 删除数据(双删)

@@ -1,0 +1,36 @@
+// DELETE /olds_user_manage
+{
+    "script": {
+        "source": "for (def i = 0; i < ctx._source.parents.length; i++) {if (ctx._source.parents[i].uid == params.uid){for (def j = 0; j < params.fields.length; j++)ctx._source.parents[i][params.fields[j]] = params.values[j];break}}",
+        "lang": "painless",
+        "params": {
+            "uid": "818B0BD2D021000",
+            "fields": [
+                "note",
+                "confirm"
+            ],
+            "values": [
+                "父亲",
+                true
+            ]
+        }
+    }
+}
+
+
+{
+    "script": {
+        "source": "if(ctx._source.%s==null){ctx._source.%s=[params.obj];}else{ctx._source.%s.add(params.obj);}ctx._source.%s = ctx._source.%s.length;",
+        "lang": "painless",
+        "params": {
+            "obj": %s
+        }
+    },
+    "upsert": {
+        "parents": [],
+        "parent_num": 0
+    }
+}
+
+
+parents parents parents parent_num parents str
