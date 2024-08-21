@@ -9,12 +9,6 @@
       "uid": {
         "type": "keyword"
       },
-      "phone": {
-        "type": "keyword"
-      },
-      "role": {
-        "type": "short"
-      },
       "details": {
         "properties": {
           "phone": {

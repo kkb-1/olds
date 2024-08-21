@@ -102,11 +102,15 @@ func (l *DetailsLogic) kafkaToES(kmsg types.DetailsKafka, emsg *types.DetailsES)
 	var smoke, drink, exercise bool
 	var height, weight float64
 	var role, age, sex int
+
 	err := copier.Copy(emsg, &(kmsg.Data[0]))
+
 	if err != nil {
 		zlog.Warn(err)
 	}
-	emsg.Details = new(model.ESDetails)
+
+	var details model.ESDetails
+	emsg.Details = &details
 	err = copier.Copy(emsg.Details, &(kmsg.Data[0]))
 	if err != nil {
 		zlog.Warn(err)
@@ -159,5 +163,6 @@ func (l *DetailsLogic) kafkaToES(kmsg types.DetailsKafka, emsg *types.DetailsES)
 	}
 
 	zlog.Debugf("emsg内容：%v", *emsg.Details)
+
 	return nil
 }

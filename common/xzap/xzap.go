@@ -17,7 +17,7 @@ type Config struct {
 	Terminal bool
 }
 
-func New(config Config) *zap.Logger {
+func New(config Config, deepth int) *zap.Logger {
 	var coreConfigs = make([]zapConfig, 0)
 	var cors = make([]zapcore.Core, 0)
 
@@ -63,7 +63,7 @@ func New(config Config) *zap.Logger {
 		cors = append(cors, consoleInfoCore)
 	}
 
-	logger := makeZapLogger(cors, zap.AddCallerSkip(0), zap.WithCaller(true))
+	logger := makeZapLogger(cors, zap.AddCallerSkip(deepth), zap.WithCaller(true))
 	defer logger.Sync()
 	return logger
 }

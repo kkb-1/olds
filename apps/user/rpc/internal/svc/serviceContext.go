@@ -20,8 +20,9 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	logger := xzap.New(c.Zap)
-	db := xgorm.MustOpen(c.DB, xzap.GetGormLog(logger))
+	logger := xzap.New(c.Zap, 1)
+
+	db := xgorm.MustOpen(c.DB, xzap.GetGormLog(xzap.New(c.Zap, 2)))
 	redisClient, err := xredis.New(context.Background(), c.XRedis)
 	//esClient := xes.MustNew(c.ES)
 	if err != nil {

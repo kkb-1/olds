@@ -1,0 +1,26 @@
+Name: usermanage.rpc
+ListenOn: 0.0.0.0:8081
+Mode: test
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: usermanage.rpc
+Zap:
+  Format: console
+  Level: debug
+  Color: true
+  FilePath: ../../../public/logs
+  File: true
+  Terminal: true
+DB:
+  Host: 127.0.0.1
+  Port: 3306
+  Username: root
+  Password: Ww260933435
+  DbName: intelligent_systems
+ES:
+  Addresses:
+    - http://localhost:9200/
+  Username: elastic
+  Password: Ww260933435
+  MaxRetries: 3

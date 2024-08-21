@@ -16,7 +16,7 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	esClient := xes.MustNew(c.ES)
-	logger := xzap.New(c.Zap)
+	logger := xzap.New(c.Zap, 1)
 	return &ServiceContext{
 		Config:   c,
 		ESClient: esClient,

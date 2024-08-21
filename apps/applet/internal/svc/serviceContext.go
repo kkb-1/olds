@@ -16,7 +16,7 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	logger := xzap.New(c.Zap)
+	logger := xzap.New(c.Zap, 1)
 	user := zrpc.MustNewClient(c.UserRPC, zrpc.WithUnaryClientInterceptor(interceptors.ClientErrorInterceptor()))
 	return &ServiceContext{
 		Config:  c,

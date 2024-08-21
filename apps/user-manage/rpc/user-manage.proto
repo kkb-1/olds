@@ -1,14 +1,118 @@
-syntax="proto3";
+syntax="proto2";
 //实现功能：
-//1.列出监护人用户列表
+//1.列出监护人或老人用户列表(分页，role，模糊查询)
 //2.获取指定用户的全部信息(包括他所绑定的老人名单)《家人，你tm多表查询，逼我用es就直说》
 //3.强制解绑or绑定
+//4.根据uid或openid查询详细信息
+
 package userManage;
+
+import "google/protobuf/wrappers.proto";
+
 option go_package="./userManage";
 
-message user {
 
+
+message details {
+  required string phone = 1;
+  required int64 role = 2;
+  required float height = 3;
+  required float weight = 4;
+  required int64 age = 5;
+  required int64 sex = 6;
+  required bool smoke = 7;
+  required bool drink = 8;
+  required bool exercise = 9;
 }
 
+message parents {
+  required string uid = 1;
+  required string note = 2;
+  required bool confirm = 3;
+}
+
+//用户个体信息实例
+message user {
+  required string openId = 1;
+  required string uid = 2;
+  optional details details = 3;
+  repeated parents parents = 4;
+  required int64 parentNum = 5;
+}
+
+message floatRange {
+  optional float gte = 1;
+  optional float lte = 2;
+}
+
+message intRange {
+  optional int64 gte = 1;
+  optional int64 lte = 2;
+}
+
+message query {
+  optional string note = 1;
+  optional int64 confirm = 2;
+  optional string phone = 3;
+  optional int64 role = 4;
+  optional floatRange height = 5;
+  optional floatRange weight = 6;
+  optional intRange age = 7;
+  optional int64 sex = 8;
+  optional int64 smoke = 9;
+  optional int64 drink = 10;
+  optional int64 exercise = 11;
+}
+
+
 message userListRequest {
+  optional query query = 1;
+  optional int64 pageNum = 3;
+  optional int64 pageSize = 4;
+}
+
+message userListResponse {
+  repeated user list = 1;
+  optional int64 length = 2;
+  optional int64 totalPage = 3;
+}
+
+
+
+message userInfoRequest {
+  optional string uid = 1;
+  optional string openId = 2;
+}
+
+message userInfoResponse {
+  optional user info = 1;
+}
+
+
+
+message userBindRequest {
+  required string openId = 1;
+  required string uid = 2;
+}
+
+message userBindResponse {
+  optional string openId = 1;
+}
+
+
+
+message userUnbindRequest {
+  required string openId = 1;
+  required string uid = 2;
+}
+
+message userUnbindResponse {
+  optional string openId = 1;
+}
+
+service userManage {
+  rpc Page(userListRequest) returns (userListResponse);
+  rpc Info(userInfoRequest) returns (userInfoResponse);
+  rpc Bind(userBindRequest) returns (userBindResponse);
+  rpc Unbind(userUnbindRequest) returns (userUnbindResponse);
 }
