@@ -2,6 +2,7 @@ package logic
 
 import (
 	"application/apps/user-manage/model"
+	"application/apps/user-manage/rpc/internal/code"
 	"application/apps/user-manage/rpc/internal/svc"
 	"application/apps/user-manage/rpc/userManage"
 	"context"
@@ -28,7 +29,6 @@ func NewInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *InfoLogic {
 }
 
 func (l *InfoLogic) Info(in *userManage.UserInfoRequest) (*userManage.UserInfoResponse, error) {
-	logx.Info(777777)
 	if in.OpenId != nil {
 		return l.findByOpenId(*in.OpenId)
 	}
@@ -48,7 +48,7 @@ func (l *InfoLogic) findByOpenId(openId string) (*userManage.UserInfoResponse, e
 	out, err := esClient.Get(model.UserMangeIndex, openId).Do(ctx)
 	if err != nil {
 		zlog.Errorf("get fail: %v", err)
-		return nil, err
+		return nil, code.USER_NOT_EXIT
 	}
 
 	data := out.Source_
@@ -85,6 +85,10 @@ func (l *InfoLogic) findByUid(uid string) (*userManage.UserInfoResponse, error) 
 	if err != nil {
 		zlog.Errorf("search fail: %v", err)
 		return nil, err
+	}
+
+	if out.Hits.Total.Value == 0 {
+		return nil, code.USER_NOT_EXIT
 	}
 
 	data := out.Hits.Hits[0].Source_

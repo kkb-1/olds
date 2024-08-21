@@ -10,6 +10,11 @@ UserRPC:
       - 127.0.0.1:2379
     Key: user.rpc
   NonBlock: true
+UserManageRPC:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: usermanage.rpc
 Zap:
   Format: console
   Level: debug

@@ -47,4 +47,31 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		rest.WithJwt(serverCtx.Config.JWT.AccessSecret),
 		rest.WithPrefix("/v1/user"),
 	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/bind",
+				Handler: UserManageBindHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/info",
+				Handler: GetUserManageInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/page",
+				Handler: UserManagePageHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/unbind",
+				Handler: UserManageUnbindHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.JWT.AccessSecret),
+		rest.WithPrefix("/v1/userManage"),
+	)
 }

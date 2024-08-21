@@ -161,22 +161,18 @@ func (l *PageLogic) pushSort(body *search.Request) {
 }
 
 func (l *PageLogic) pushPage(numptr, sizeptr *int64, body *search.Request) {
-	var num, size int64
-	if numptr != nil {
+	var num, size int64 = 0, 10
+	if numptr != nil && *numptr > 0 {
 		num = *numptr
+		num--
 	}
 
-	if sizeptr != nil {
+	if sizeptr != nil && *sizeptr > 0 {
 		size = *sizeptr
 	}
 
 	num1, size1 := int(num), int(size)
-	if num1 != 0 {
-		num = num - 1
-		body.From = &num1
-	}
 
-	if size1 != 0 {
-		body.Size = &size1
-	}
+	body.From = &num1
+	body.Size = &size1
 }

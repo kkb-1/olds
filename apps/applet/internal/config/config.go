@@ -12,6 +12,7 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
-	UserRPC zrpc.RpcClientConf
-	Zap     xzap.Config
+	UserRPC       zrpc.RpcClientConf
+	UserManageRPC zrpc.RpcClientConf
+	Zap           xzap.Config
 }

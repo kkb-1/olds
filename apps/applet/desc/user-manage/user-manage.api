@@ -1,0 +1,151 @@
+syntax = "v1"
+
+info(
+    title: "用户管理模块"
+    desc: "用户管理模块api接口"
+    author: "kkb"
+    email: "2609479523@qq.com"
+    version: "1"
+)
+
+type (
+    //系统用户基本信息实例
+    UserManageInfo {
+        OpenId string `json:"openId"`
+        Uid string `json:"uid"`
+        Details Details `json:"details"`
+        Parents []Parents `json:"parents"`
+        ParentNum int64 `json:"parentNum"`
+    }
+
+    Details {
+        Phone string `json:"phone"`
+        Role int64  `json:"role"`
+        Height float64 `json:"height"`
+        Weight float64 `json:"weight"`
+        Age int64 `json:"age"`
+        Sex int64 `json:"sex"`
+        Smoke bool `json:"smoke"`
+        Drink bool `json:"drink"`
+        Exercise bool `json:"exercise"`
+    }
+
+    Parents {
+        Uid string `json:"uid"`
+        Note string `json:"note"`
+        Confirm bool `json:"confirm"`
+    }
+)
+
+type (
+    //模糊查询的所有可用值
+    Query {
+        Note string `json:"note,optional"`
+
+        //-1表示false，1表示true
+        Confirm int64 `json:"confirm,optional"`
+
+        Phone string `json:"phone,optional"`
+        Role int64 `json:"role,optional"`
+        Height FloatRange `json:"height,optional"`
+        Weight FloatRange `json:"weight,optional"`
+        Age IntRange `json:"age,optional"`
+
+        //1表示男，2表示女
+        Sex int64 `json:"sex,optional"`
+
+        //-1表示false，1表示true
+        Smoke int64 `json:"smoke,optional"`
+
+        //-1表示false，1表示true
+        Drink int64 `json:"drink,optional"`
+
+        //-1表示false，1表示true
+        Exercise int64 `json:"exercise,optional"`
+    }
+
+
+    FloatRange {
+        //范围最小值
+        Gte float64 `json:"gte,optional"`
+        //范围最大值
+        Lte float64 `json:"lte,optional"`
+    }
+
+    IntRange {
+        //范围最小值
+        Gte int64 `json:"gte,optional"`
+        //范围最大值
+        Lte int64 `json:"lte,optional"`
+    }
+)
+
+type (
+    UserManagePageRequest {
+        Query Query `json:"query,optional"`
+        PageNum int64 `form:"pageNum,default=1"`
+        PageSize int64 `form:"pageSize,default=10"`
+    }
+
+    UserManagePageResponse {
+        List []UserManageInfo `json:"list"`
+        Length int64 `json:"length"`
+        TotalPage int64 `json:"totalPage"`
+    }
+)
+
+type (
+    GetUserManageInfoRequest {
+        OpenId string `form:"openId,optional"`
+        Uid string `form:"uid,optional"`
+    }
+
+    GetUserManageInfoResponse {
+        Info UserManageInfo `json:"info"`
+    }
+)
+
+type (
+    UserManageBindRequest {
+      OpenId  string `json:"openId"`
+      Uid  string `json:"uid"`
+    }
+
+    UserManageBindResponse {
+      OpenId string `json:"openId"`
+    }
+)
+
+type (
+    UserManageUnbindRequest {
+        OpenId  string `json:"openId"`
+        Uid  string `json:"uid"`
+    }
+
+    UserManageUnbindResponse {
+        OpenId string `json:"openId"`
+    }
+)
+
+
+@server (
+    prefix: /v1/userManage
+    jwt:    JWT
+)
+service user-api {
+    @doc "分页查询"
+    @handler UserManagePage
+    get /page (UserManagePageRequest)returns(UserManagePageResponse)
+
+    @doc "通过uid或openid查看用户信息"
+    @handler GetUserManageInfo
+    get /info (GetUserManageInfoRequest) returns (GetUserManageInfoResponse)
+
+    @doc "通过监护人openid和老人的uid进行强制绑定"
+    @handler UserManageBind
+    post /bind  (UserManageBindRequest)returns (UserManageBindResponse)
+
+    @doc "通过监护人openid和老人的uid进行强制解绑"
+    @handler UserManageUnbind
+    post /unbind (UserManageUnbindRequest) returns (UserManageUnbindResponse)
+}

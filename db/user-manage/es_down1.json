@@ -1,16 +1,1 @@
 // DELETE /olds_user_manage
-
-{
-    \"query\":{
-        \"note\": \"妈\",
-        \"confirm\": 1,
-        \"phone\": \"1\",
-        \"role\": 1,
-        \"height\": {
-            \"gte\":0,
-            \"lte\":10
-        }
-    }
-}
-
-grpcurl -plaintext -d '{\"query\":{\"note\": \"妈\",\"confirm\": 1,\"phone\": \"1\",\"role\": 1,\"height\": {\"gte\":0,\"lte\":10}}}' 127.0.0.1:8081 userManage.userManage.Page
