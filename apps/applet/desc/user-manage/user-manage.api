@@ -40,49 +40,49 @@ type (
 type (
     //模糊查询的所有可用值
     Query {
-        Note string `json:"note,optional"`
+        Note string `form:"note,optional"`
 
         //-1表示false，1表示true
-        Confirm int64 `json:"confirm,optional"`
+        Confirm int64 `form:"confirm,optional"`
 
-        Phone string `json:"phone,optional"`
-        Role int64 `json:"role,optional"`
-        Height FloatRange `json:"height,optional"`
-        Weight FloatRange `json:"weight,optional"`
-        Age IntRange `json:"age,optional"`
+        Phone string `form:"phone,optional"`
+        Role int64 `form:"role,optional"`
+        Height FloatRange `form:"height,optional"`
+        Weight FloatRange `form:"weight,optional"`
+        Age IntRange `form:"age,optional"`
 
         //1表示男，2表示女
-        Sex int64 `json:"sex,optional"`
+        Sex int64 `form:"sex,optional"`
 
         //-1表示false，1表示true
-        Smoke int64 `json:"smoke,optional"`
+        Smoke int64 `form:"smoke,optional"`
 
         //-1表示false，1表示true
-        Drink int64 `json:"drink,optional"`
+        Drink int64 `form:"drink,optional"`
 
         //-1表示false，1表示true
-        Exercise int64 `json:"exercise,optional"`
+        Exercise int64 `form:"exercise,optional"`
     }
 
 
     FloatRange {
         //范围最小值
-        Gte float64 `json:"gte,optional"`
+        Gte float64 `form:"gte,optional"`
         //范围最大值
-        Lte float64 `json:"lte,optional"`
+        Lte float64 `form:"lte,optional"`
     }
 
     IntRange {
         //范围最小值
-        Gte int64 `json:"gte,optional"`
+        Gte int64 `form:"gte,optional"`
         //范围最大值
-        Lte int64 `json:"lte,optional"`
+        Lte int64 `form:"lte,optional"`
     }
 )
 
 type (
     UserManagePageRequest {
-        Query Query `json:"query,optional"`
+        Query Query `form:"query,optional"`
         PageNum int64 `form:"pageNum,default=1"`
         PageSize int64 `form:"pageSize,default=10"`
     }

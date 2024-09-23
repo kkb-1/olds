@@ -14,8 +14,8 @@ type Details struct {
 }
 
 type FloatRange struct {
-	Gte float64 `json:"gte,optional"`
-	Lte float64 `json:"lte,optional"`
+	Gte float64 `form:"gte,optional"`
+	Lte float64 `form:"lte,optional"`
 }
 
 type GetUserInfoResponse struct {
@@ -32,8 +32,8 @@ type GetUserManageInfoResponse struct {
 }
 
 type IntRange struct {
-	Gte int64 `json:"gte,optional"`
-	Lte int64 `json:"lte,optional"`
+	Gte int64 `form:"gte,optional"`
+	Lte int64 `form:"lte,optional"`
 }
 
 type InviteResponse struct {
@@ -57,17 +57,17 @@ type Parents struct {
 }
 
 type Query struct {
-	Note     string     `json:"note,optional"`
-	Confirm  int64      `json:"confirm,optional"`
-	Phone    string     `json:"phone,optional"`
-	Role     int64      `json:"role,optional"`
-	Height   FloatRange `json:"height,optional"`
-	Weight   FloatRange `json:"weight,optional"`
-	Age      IntRange   `json:"age,optional"`
-	Sex      int64      `json:"sex,optional"`
-	Smoke    int64      `json:"smoke,optional"`
-	Drink    int64      `json:"drink,optional"`
-	Exercise int64      `json:"exercise,optional"`
+	Note     string     `form:"note,optional"`
+	Confirm  int64      `form:"confirm,optional"`
+	Phone    string     `form:"phone,optional"`
+	Role     int64      `form:"role,optional"`
+	Height   FloatRange `form:"height,optional"`
+	Weight   FloatRange `form:"weight,optional"`
+	Age      IntRange   `form:"age,optional"`
+	Sex      int64      `form:"sex,optional"`
+	Smoke    int64      `form:"smoke,optional"`
+	Drink    int64      `form:"drink,optional"`
+	Exercise int64      `form:"exercise,optional"`
 }
 
 type RegisterRequest struct {
@@ -120,7 +120,7 @@ type UserManageInfo struct {
 }
 
 type UserManagePageRequest struct {
-	Query    Query `json:"query,optional"`
+	Query    Query `form:"query,optional"`
 	PageNum  int64 `form:"pageNum,default=1"`
 	PageSize int64 `form:"pageSize,default=10"`
 }
