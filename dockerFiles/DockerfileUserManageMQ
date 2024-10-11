@@ -35,7 +35,7 @@ WORKDIR /app
 #ENV CEPHALON_REDIS_PASSWORD=StarkSim123456.
 
 
-COPY --from=builder /src/apps/user/mq/etc /app/
+COPY --from=builder /src/apps/user-manage/mq/etc /app/
 COPY --from=builder /src/mq_server /app/
 
 ENTRYPOINT ["./mq_server"]

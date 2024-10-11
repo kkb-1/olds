@@ -35,7 +35,7 @@ WORKDIR /app
 #ENV CEPHALON_REDIS_PASSWORD=StarkSim123456.
 
 
-COPY --from=builder /src/apps/user/rpc/etc /app/
+COPY --from=builder /src/apps/user-manage/rpc/etc /app/
 COPY --from=builder /src/rpc_server /app/
 
 EXPOSE 8081
