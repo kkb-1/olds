@@ -18,7 +18,7 @@ jobs:
         run: |
           docker login -u kkbpcc registry.cn-shenzhen.aliyuncs.com -p ${{ secrets.DOCKERHUB_SECRET }}
           docker buildx create --use
-          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileAPI --push --tag kkb-docker/olds-api:latest
-          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageMQ --push --tag kkb-docker/olds-user-manage-mq:latest
-          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageRPC --push --tag kkb-docker/olds-user-manage-rpc:latest
-          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserRPC --push --tag kkb-docker/olds-user-rpc:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileAPI --push --tag registry.cn-shenzhen.aliyuncs.com/kkb-docker/olds-api:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageMQ --push --tag registry.cn-shenzhen.aliyuncs.com/kkb-docker/olds-user-manage-mq:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageRPC --push --tag registry.cn-shenzhen.aliyuncs.com/kkb-docker/olds-user-manage-rpc:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserRPC --push --tag registry.cn-shenzhen.aliyuncs.com/kkb-docker/olds-user-rpc:latest
