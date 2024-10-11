@@ -18,4 +18,7 @@ jobs:
         run: |
           docker login -u kkbp -p ${{ secrets.DOCKERHUB_SECRET }}
           docker buildx create --use
-          docker buildx build . --platform=linux/amd64 --file Dockerfile --push --tag kkb/olds:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileAPI --push --tag kkb/olds/api:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageMQ --push --tag kkb/olds/user-manage-mq:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserManageRPC --push --tag kkb/olds/user-manage-rpc:latest
+          docker buildx build . --platform=linux/amd64 --file dockerFiles/DockerfileUserRPC --push --tag kkb/olds/user-rpc:latest
